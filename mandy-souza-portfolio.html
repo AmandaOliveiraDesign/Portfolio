@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mandy Souza — Design · Strategy · Making</title>
+<meta name="description" content="Multidisciplinary designer working at the intersection of strategy, facilitation, and making. Based in Gothenburg, Sweden.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --rose: #f5e6e8; --rose-mid: #e8c5c9; --rose-deep: #c9939a;
+    --navy: #1a2744; --navy-mid: #2d3f6e; --navy-light: #4a6096;
+    --cream: #fdf9f7; --text-muted: #6b7a99;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--sans); background: var(--cream); color: var(--navy); line-height: 1.7; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.25rem 3rem; display: flex; justify-content: space-between; align-items: center;
+    background: rgba(253,249,247,0.93); backdrop-filter: blur(8px);
+    border-bottom: 0.5px solid var(--rose-mid);
+  }
+  .nav-logo { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; color: var(--navy); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+  .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--navy); transition: all 0.3s; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 3rem; }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding-top: 5rem; background: var(--cream); position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 55%; height: 110%; background: var(--rose); border-radius: 60% 0 0 60%; z-index: 0; }
+  .hero-text { position: relative; z-index: 1; padding: 0 3rem; animation: fadeUp 0.9s ease both; }
+  .hero-eyebrow { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--navy-light); font-weight: 400; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .hero-eyebrow::before { content: ''; display: inline-block; width: 2rem; height: 1px; background: var(--navy-light); }
+  h1.hero-name { font-family: var(--serif); font-size: clamp(3.5rem, 6vw, 5.5rem); font-weight: 400; line-height: 1.05; color: var(--navy); margin-bottom: 1.5rem; }
+  h1.hero-name em { font-style: italic; color: var(--rose-deep); }
+  .hero-tagline { font-size: 1.05rem; font-weight: 300; color: var(--text-muted); max-width: 420px; line-height: 1.85; margin-bottom: 2.5rem; }
+  .btn-primary { display: inline-block; padding: 0.9rem 2.2rem; background: var(--navy); color: var(--cream); font-family: var(--sans); font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: background 0.25s, transform 0.2s; cursor: pointer; border: none; }
+  .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
+  .btn-outline { display: inline-block; padding: 0.9rem 2.2rem; background: transparent; color: var(--navy); font-family: var(--sans); font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 2px; border: 1px solid var(--navy); transition: all 0.25s; cursor: pointer; margin-left: 1rem; }
+  .btn-outline:hover { background: var(--navy); color: var(--cream); }
+  .hero-visual { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; padding: 4rem 3rem 4rem 2rem; animation: fadeUp 0.9s ease 0.2s both; }
+  .hero-card { background: white; border-radius: 4px; padding: 2.5rem; width: 100%; max-width: 340px; border: 0.5px solid var(--rose-mid); box-shadow: 0 2px 40px rgba(26,39,68,0.08); }
+  .hero-card-label { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose-deep); font-weight: 500; margin-bottom: 1.25rem; }
+  .hero-stat { margin-bottom: 1.25rem; padding-bottom: 1.25rem; border-bottom: 0.5px solid var(--rose); }
+  .hero-stat:last-of-type { border-bottom: none; margin-bottom: 1rem; padding-bottom: 0; }
+  .hero-stat-num { font-family: var(--serif); font-size: 2.2rem; font-weight: 400; color: var(--navy); line-height: 1; margin-bottom: 0.2rem; }
+  .hero-stat-desc { font-size: 0.78rem; color: var(--text-muted); font-weight: 300; }
+  .hero-langs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.25rem; }
+  .lang-pill { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.75rem; background: var(--rose); color: var(--navy-mid); border-radius: 20px; font-weight: 400; }
+
+  /* ABOUT */
+  .about { padding: 8rem 0; background: var(--navy); color: white; }
+  .about .container { display: grid; grid-template-columns: 1fr 1.6fr; gap: 5rem; align-items: start; }
+  .section-label { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-mid); font-weight: 400; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(232,197,201,0.25); }
+  h2.section-title { font-family: var(--serif); font-size: clamp(2.2rem, 4vw, 3.2rem); font-weight: 400; line-height: 1.2; margin-bottom: 2rem; }
+  .about h2 { color: white; }
+  .about h2 em { font-style: italic; color: var(--rose-mid); }
+  .about-sticky { position: sticky; top: 6rem; }
+  .about-values { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 0.7rem; }
+  .value-item { display: flex; align-items: center; gap: 1rem; font-size: 0.85rem; font-weight: 300; color: rgba(255,255,255,0.72); }
+  .value-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--rose-deep); flex-shrink: 0; }
+  .about-text p { font-size: 1.02rem; font-weight: 300; line-height: 1.9; color: rgba(255,255,255,0.8); margin-bottom: 1.5rem; }
+  .about-text p strong { font-weight: 500; color: white; }
+  .highlight-block { border-left: 2px solid var(--rose-deep); padding-left: 1.5rem; margin: 2.5rem 0; font-family: var(--serif); font-size: 1.4rem; font-style: italic; color: rgba(255,255,255,0.9); line-height: 1.6; font-weight: 300; }
+  .audiences { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+  .audience-tag { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.9rem; border: 0.5px solid rgba(232,197,201,0.35); color: rgba(255,255,255,0.65); border-radius: 20px; font-weight: 300; }
+
+  /* AREAS */
+  .areas { padding: 8rem 0; background: var(--cream); }
+  .section-header { text-align: center; margin-bottom: 5rem; }
+  .section-eyebrow { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rose-deep); font-weight: 400; margin-bottom: 1rem; }
+  .areas h2 { color: var(--navy); }
+  .areas h2 em { font-style: italic; color: var(--rose-deep); }
+  .areas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; background: var(--rose-mid); border: 1.5px solid var(--rose-mid); }
+  .area-card { background: var(--cream); padding: 3rem 2.5rem; transition: background 0.3s; cursor: default; }
+  .area-card:hover { background: var(--navy); }
+  .area-num { font-family: var(--serif); font-size: 3.5rem; font-weight: 300; color: var(--rose-mid); line-height: 1; margin-bottom: 1.5rem; transition: color 0.3s; }
+  .area-card:hover .area-num { color: rgba(232,197,201,0.35); }
+  .area-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 500; color: var(--navy); margin-bottom: 0.75rem; transition: color 0.3s; line-height: 1.3; }
+  .area-card:hover .area-title { color: white; }
+  .area-desc { font-size: 0.85rem; font-weight: 300; color: var(--text-muted); line-height: 1.7; transition: color 0.3s; }
+  .area-card:hover .area-desc { color: rgba(255,255,255,0.65); }
+
+  /* PROJECTS */
+  .projects { padding: 8rem 0; background: var(--rose); }
+  .projects h2 { color: var(--navy); }
+  .projects h2 em { font-style: italic; color: var(--rose-deep); }
+  .projects-list { margin-top: 4rem; }
+  .project-item { display: grid; grid-template-columns: 160px 1fr; border-top: 0.5px solid var(--rose-mid); cursor: pointer; transition: background 0.2s; }
+  .project-item:last-child { border-bottom: 0.5px solid var(--rose-mid); }
+  .project-item:hover { background: rgba(255,255,255,0.5); }
+  .project-left { padding: 2.5rem 2rem 2.5rem 0; border-right: 0.5px solid var(--rose-mid); display: flex; flex-direction: column; gap: 0.6rem; }
+  .project-year { font-family: var(--serif); font-size: 1rem; color: var(--rose-deep); font-weight: 400; }
+  .project-tag { display: inline-block; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.35rem 0.75rem; background: var(--navy); color: var(--cream); border-radius: 2px; font-weight: 400; align-self: start; }
+  .project-tag.alt { background: var(--rose-deep); }
+  .project-right { padding: 2.5rem 0 2.5rem 2.5rem; }
+  .project-right h3 { font-family: var(--serif); font-size: 1.6rem; font-weight: 500; color: var(--navy); margin-bottom: 0.35rem; line-height: 1.25; }
+  .project-location { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem; font-weight: 400; }
+  .project-summary { font-size: 0.92rem; font-weight: 300; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.25rem; }
+  .project-detail { display: none; }
+  .project-detail.open { display: block; }
+  .project-detail-inner { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 0.5px solid var(--rose-mid); }
+  .detail-section-title { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose-deep); font-weight: 500; margin-bottom: 0.75rem; margin-top: 1.5rem; }
+  .detail-section-title:first-child { margin-top: 0; }
+  .detail-text { font-size: 0.9rem; font-weight: 300; color: var(--navy-mid); line-height: 1.8; margin-bottom: 0.5rem; }
+  .detail-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .detail-list li { font-size: 0.88rem; font-weight: 300; color: var(--navy-mid); line-height: 1.6; display: flex; gap: 0.75rem; align-items: start; }
+  .detail-list li::before { content: '—'; color: var(--rose-deep); flex-shrink: 0; font-size: 0.8rem; margin-top: 0.15rem; }
+  .tools-wrap { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.25rem; }
+  .tool-pill { font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.75rem; background: white; color: var(--navy-mid); border-radius: 20px; font-weight: 400; border: 0.5px solid var(--rose-mid); }
+  .expand-btn { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 400; color: var(--navy-light); background: none; border: none; cursor: pointer; padding: 0; transition: color 0.2s; font-family: var(--sans); }
+  .expand-btn:hover { color: var(--navy); }
+  .expand-icon { font-size: 1.1rem; transition: transform 0.3s; line-height: 1; display: inline-block; }
+  .expand-icon.open { transform: rotate(45deg); }
+
+  /* METHODOLOGY */
+  .methodology { padding: 8rem 0; background: var(--cream); }
+  .methodology h2 { color: var(--navy); }
+  .methodology h2 em { font-style: italic; color: var(--rose-deep); }
+  .method-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; margin-top: 4rem; }
+  .method-step { position: relative; padding: 2.5rem 2rem; border-top: 2px solid var(--rose-mid); }
+  .method-step::before { content: ''; position: absolute; top: -2px; left: 0; width: 0; height: 2px; background: var(--navy); transition: width 0.4s ease; }
+  .method-step:hover::before { width: 100%; }
+  .step-num { font-family: var(--serif); font-size: 2.5rem; font-weight: 300; color: var(--rose-mid); line-height: 1; margin-bottom: 1.25rem; }
+  .step-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--navy); margin-bottom: 0.75rem; }
+  .step-desc { font-size: 0.84rem; font-weight: 300; color: var(--text-muted); line-height: 1.75; }
+
+  /* SKILLS */
+  .skills { padding: 8rem 0; background: var(--navy); color: white; }
+  .skills h2 { color: white; }
+  .skills h2 em { font-style: italic; color: var(--rose-mid); }
+  .skills-grid { margin-top: 4rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 0.5px solid rgba(232,197,201,0.18); }
+  .skill-group { padding: 2.5rem 3rem; border-right: 0.5px solid rgba(232,197,201,0.18); border-bottom: 0.5px solid rgba(232,197,201,0.18); }
+  .skill-group:nth-child(even) { border-right: none; }
+  .skill-group:nth-child(n+5) { border-bottom: none; }
+  .skill-group-title { font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose-mid); font-weight: 400; margin-bottom: 1.5rem; }
+  .skill-list { display: flex; flex-direction: column; gap: 0.6rem; }
+  .skill-item { display: flex; align-items: center; gap: 0.75rem; font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.78); }
+  .skill-item::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--rose-deep); flex-shrink: 0; }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 8rem 0; background: var(--cream); }
+  .testimonials h2 { color: var(--navy); }
+  .testimonials h2 em { font-style: italic; color: var(--rose-deep); }
+  .dep-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 4rem; }
+  .dep-card { background: white; border: 0.5px solid var(--rose-mid); border-radius: 4px; padding: 2.5rem; }
+  .dep-quote-mark { font-family: var(--serif); font-size: 5rem; color: var(--rose); line-height: 0.5; margin-bottom: 1.5rem; font-weight: 300; display: block; }
+  .dep-text { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; font-style: italic; color: var(--navy); line-height: 1.7; margin-bottom: 2rem; }
+  .dep-author-name { font-size: 0.85rem; font-weight: 500; color: var(--navy); margin-bottom: 0.2rem; }
+  .dep-author-role { font-size: 0.78rem; color: var(--text-muted); font-weight: 300; }
+
+  /* CONTACT */
+  .contact { padding: 8rem 0; background: var(--navy); color: white; }
+  .contact-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .contact h2 { color: white; margin-bottom: 1.5rem; }
+  .contact h2 em { font-style: italic; color: var(--rose-mid); }
+  .contact-intro { font-size: 1rem; font-weight: 300; color: rgba(255,255,255,0.68); line-height: 1.85; margin-bottom: 2.5rem; }
+  .contact-links { display: flex; flex-direction: column; }
+  .contact-link { display: flex; align-items: center; gap: 1rem; font-size: 0.88rem; font-weight: 300; color: rgba(255,255,255,0.78); text-decoration: none; transition: color 0.2s; padding: 1.25rem 0; border-bottom: 0.5px solid rgba(232,197,201,0.18); }
+  .contact-link:first-child { border-top: 0.5px solid rgba(232,197,201,0.18); }
+  .contact-link:hover { color: var(--rose-mid); }
+  .contact-link-label { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rose-deep); min-width: 80px; font-weight: 400; }
+  .contact-form { background: rgba(255,255,255,0.04); border: 0.5px solid rgba(232,197,201,0.2); border-radius: 4px; padding: 3rem; }
+  .form-label { font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--rose-mid); font-weight: 400; display: block; margin-bottom: 0.5rem; }
+  .form-input { width: 100%; background: rgba(255,255,255,0.06); border: 0.5px solid rgba(232,197,201,0.22); border-radius: 2px; padding: 0.85rem 1rem; font-family: var(--sans); font-size: 0.9rem; font-weight: 300; color: white; margin-bottom: 1.25rem; transition: border-color 0.2s; outline: none; }
+  .form-input:focus { border-color: var(--rose-mid); }
+  .form-input::placeholder { color: rgba(255,255,255,0.28); }
+  textarea.form-input { height: 110px; resize: vertical; font-family: var(--sans); }
+
+  footer { padding: 2rem 3rem; background: #111c35; display: flex; justify-content: space-between; align-items: center; }
+  .footer-name { font-family: var(--serif); font-size: 1rem; font-weight: 400; color: rgba(255,255,255,0.45); }
+  .footer-copy { font-size: 0.72rem; color: rgba(255,255,255,0.28); font-weight: 300; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; position: fixed; top: 60px; left: 0; right: 0; background: rgba(253,249,247,0.98); backdrop-filter: blur(8px); flex-direction: column; gap: 0; border-bottom: 0.5px solid var(--rose-mid); padding: 0; }
+    .nav-links.open { display: flex; }
+    .nav-links li a { display: block; padding: 1rem 1.5rem; border-bottom: 0.5px solid var(--rose); }
+    .nav-toggle { display: flex; }
+    .container { padding: 0 1.5rem; }
+    .hero { grid-template-columns: 1fr; padding-top: 6rem; }
+    .hero::before { display: none; }
+    .hero-text { padding: 3rem 1.5rem 2rem; }
+    .hero-visual { padding: 0 1.5rem 3rem; }
+    .about .container { grid-template-columns: 1fr; gap: 3rem; }
+    .about-sticky { position: static; }
+    .areas-grid { grid-template-columns: 1fr; }
+    .method-steps { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .method-step { padding: 1.5rem 1rem; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .skill-group:nth-child(even) { border-right: none; }
+    .skill-group:nth-child(n+2) { border-bottom: 0.5px solid rgba(232,197,201,0.18); }
+    .skill-group:last-child { border-bottom: none; }
+    .dep-grid { grid-template-columns: 1fr; }
+    .contact-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .project-item { grid-template-columns: 1fr; }
+    .project-left { border-right: none; border-bottom: 0.5px solid var(--rose-mid); padding: 1.5rem 0; flex-direction: row; align-items: center; gap: 1rem; }
+    .project-right { padding: 1.5rem 0; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Mandy Souza</div>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#about" onclick="closeMenu()">About</a></li>
+    <li><a href="#areas" onclick="closeMenu()">Services</a></li>
+    <li><a href="#projects" onclick="closeMenu()">Projects</a></li>
+    <li><a href="#methodology" onclick="closeMenu()">Approach</a></li>
+    <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+  </ul>
+  <button class="nav-toggle" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-text">
+    <p class="hero-eyebrow">Design · Strategy · Making</p>
+    <h1 class="hero-name">Mandy<br><em>Souza</em></h1>
+    <p class="hero-tagline">Multidisciplinary designer working at the intersection of strategy, facilitation, and making — translating complex challenges into structured processes and tangible outcomes.</p>
+    <a href="#contact" class="btn-primary">Get in touch</a>
+    <a href="#projects" class="btn-outline">View projects</a>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card">
+      <p class="hero-card-label">Professional profile</p>
+      <div class="hero-stat">
+        <div class="hero-stat-num">3</div>
+        <div class="hero-stat-desc">Core disciplines: strategy, facilitation & making</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">Int'l</div>
+        <div class="hero-stat-desc">Projects in Brazil & internationally</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">Gtb</div>
+        <div class="hero-stat-desc">Based in Gothenburg, Sweden</div>
+      </div>
+      <div class="hero-langs">
+        <span class="lang-pill">Português</span>
+        <span class="lang-pill">English</span>
+        <span class="lang-pill">Svenska</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-sticky">
+      <p class="section-label">About me</p>
+      <h2 class="section-title">Strategy<br>meets <em>making</em></h2>
+      <div class="about-values">
+        <div class="value-item"><span class="value-dot"></span> Systems thinking</div>
+        <div class="value-item"><span class="value-dot"></span> Co-creation & collaboration</div>
+        <div class="value-item"><span class="value-dot"></span> Hands-on experimentation</div>
+        <div class="value-item"><span class="value-dot"></span> Clarity within complexity</div>
+        <div class="value-item"><span class="value-dot"></span> Strategic vision & execution</div>
+      </div>
+    </div>
+    <div class="about-text reveal">
+      <p>I am a <strong>multidisciplinary designer</strong> focused on methodology, learning experiences, and collaborative innovation. My work sits at the intersection of strategy and making — translating complex ideas into structured processes and tangible outcomes.</p>
+      <p>I'm particularly interested in how design can create clarity within complexity, whether through visual frameworks, facilitation tools, or rapid prototyping. I enjoy building environments where people can think critically, experiment confidently, and transform ideas into actionable solutions.</p>
+      <div class="highlight-block">"My practice combines systems thinking, co-creation, and hands-on experimentation — always balancing strategic vision with practical execution."</div>
+      <p>Based in <strong>Gothenburg, Sweden</strong>, I work with cultural projects, educational institutions, NGOs, and innovative organizations in Brazil and internationally.</p>
+      <div class="audiences">
+        <span class="audience-tag">Cultural projects</span>
+        <span class="audience-tag">EdTech startups</span>
+        <span class="audience-tag">Teaching institutions</span>
+        <span class="audience-tag">NGOs</span>
+        <span class="audience-tag">Social programs</span>
+        <span class="audience-tag">Innovation hubs</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AREAS -->
+<section class="areas" id="areas">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">What I do</p>
+      <h2 class="section-title">Areas of <em>expertise</em></h2>
+    </div>
+    <div class="areas-grid reveal">
+      <div class="area-card">
+        <div class="area-num">01</div>
+        <div class="area-title">Methodology & Facilitation</div>
+        <div class="area-desc">Designing structured processes for innovation sprints, workshops, and learning experiences — from frameworks to hands-on facilitation tools.</div>
+      </div>
+      <div class="area-card">
+        <div class="area-num">02</div>
+        <div class="area-title">Digital Fabrication</div>
+        <div class="area-desc">End-to-end digital fabrication — 3D printing, laser cutting, and rapid prototyping — for products, educational tools, and spatial solutions.</div>
+      </div>
+      <div class="area-card">
+        <div class="area-num">03</div>
+        <div class="area-title">Writing & Documentation</div>
+        <div class="area-desc">Strategic writing for grants, public calls, and program documentation — including KPI frameworks, impact reports, and educational materials.</div>
+      </div>
+      <div class="area-card">
+        <div class="area-num">04</div>
+        <div class="area-title">Course Development</div>
+        <div class="area-desc">Creating full training programs from curriculum design to assessment tools — including workshops on digital fabrication and making technologies.</div>
+      </div>
+      <div class="area-card">
+        <div class="area-num">05</div>
+        <div class="area-title">Rapid Prototyping</div>
+        <div class="area-desc">Transforming strategic ideas into tangible, testable prototypes — bridging the gap between conceptual thinking and physical validation.</div>
+      </div>
+      <div class="area-card">
+        <div class="area-num">06</div>
+        <div class="area-title">Mentorship & Guidance</div>
+        <div class="area-desc">Supporting teams and individuals in structuring projects, defining measurable goals, and translating ideas into sustainable processes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Selected work</p>
+      <h2 class="section-title">Projects & <em>experience</em></h2>
+    </div>
+    <div class="projects-list reveal">
+
+      <div class="project-item" onclick="toggleProject(this)">
+        <div class="project-left">
+          <div class="project-year">2023</div>
+          <span class="project-tag">Facilitation</span>
+          <span class="project-tag alt">Methodology</span>
+        </div>
+        <div class="project-right">
+          <h3>Urban Co-Creation Hackathon</h3>
+          <p class="project-location">Recife, Brazil</p>
+          <p class="project-summary">Co-designed and facilitated the methodology for a 3-day urban innovation hackathon — creating structured tools to guide teams from research to prototyping, mentoring participants, and supporting digital fabrication.</p>
+          <button class="expand-btn" onclick="event.stopPropagation(); toggleProject(this.closest('.project-item'))">
+            <span class="expand-icon">+</span> Read more
+          </button>
+          <div class="project-detail">
+            <div class="project-detail-inner">
+              <p class="detail-section-title">The project</p>
+              <p class="detail-text">A 3-day urban innovation sprint focused on reactivating public life in downtown Recife. The challenge invited multidisciplinary teams to develop creative, feasible, and sustainable solutions for Rua Nova — a historic commercial street undergoing urban transformation. The initiative combined strategic urban thinking, collaborative design, and digital fabrication.</p>
+              <p class="detail-section-title">My role</p>
+              <p class="detail-text">I contributed to the strategic design of the hackathon methodology and the overall participant journey — structuring a process that balanced creative exploration with clarity and execution.</p>
+              <ul class="detail-list">
+                <li>Structured observation and ideation canvas</li>
+                <li>Step-by-step methodology cards to guide teams through each phase</li>
+                <li>Visual support materials to align decision-making and focus</li>
+              </ul>
+              <p class="detail-text" style="margin-top:0.75rem;">During the sprint, I mentored teams in refining insights, defining opportunity areas, and assessing feasibility. I also guided participants in materializing concepts using digital fabrication tools.</p>
+              <p class="detail-section-title">Tools & methods</p>
+              <div class="tools-wrap">
+                <span class="tool-pill">Design Strategy</span>
+                <span class="tool-pill">Co-Creation Frameworks</span>
+                <span class="tool-pill">Visual Facilitation</span>
+                <span class="tool-pill">Canvas Development</span>
+                <span class="tool-pill">Rapid Prototyping</span>
+                <span class="tool-pill">Digital Fabrication</span>
+                <span class="tool-pill">Urban Research</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item" onclick="toggleProject(this)">
+        <div class="project-left">
+          <div class="project-year">Ongoing</div>
+          <span class="project-tag">Digital Fab</span>
+          <span class="project-tag alt">Workshops</span>
+        </div>
+        <div class="project-right">
+          <h3>Digital Fabrication Practice</h3>
+          <p class="project-location">3D Printing, Laser Cutting & Creative Technology</p>
+          <p class="project-summary">End-to-end digital fabrication work — from 3D modeling and file preparation to machine operation and physical production. Designing and facilitating courses that make fabrication technologies accessible and strategically applicable.</p>
+          <button class="expand-btn" onclick="event.stopPropagation(); toggleProject(this.closest('.project-item'))">
+            <span class="expand-icon">+</span> Read more
+          </button>
+          <div class="project-detail">
+            <div class="project-detail-inner">
+              <p class="detail-section-title">The practice</p>
+              <p class="detail-text">I work with digital fabrication as both a technical and strategic tool, integrating 3D printing and laser cutting into processes of experimentation, prototyping, and product development. My practice connects digital design with physical production, enabling fast iteration and tangible validation of ideas.</p>
+              <p class="detail-section-title">What I develop</p>
+              <ul class="detail-list">
+                <li>Functional prototypes for innovative solutions</li>
+                <li>New products designed for end users</li>
+                <li>Educational tools and learning resources</li>
+                <li>Signage systems and spatial communication elements</li>
+              </ul>
+              <p class="detail-text" style="margin-top:0.75rem;">I design and deliver courses and workshops on digital fabrication for diverse audiences — focusing not only on how to use the machines, but on how to apply them to solve real-world challenges.</p>
+              <p class="detail-section-title">Tools & methods</p>
+              <div class="tools-wrap">
+                <span class="tool-pill">3D Modeling</span>
+                <span class="tool-pill">3D Printing (FDM)</span>
+                <span class="tool-pill">Laser Cutting</span>
+                <span class="tool-pill">Machine Operation</span>
+                <span class="tool-pill">Rapid Prototyping</span>
+                <span class="tool-pill">Product Development</span>
+                <span class="tool-pill">Workshop Facilitation</span>
+                <span class="tool-pill">Curriculum Design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-item" onclick="toggleProject(this)">
+        <div class="project-left">
+          <div class="project-year">Ongoing</div>
+          <span class="project-tag">Writing</span>
+          <span class="project-tag alt">Strategy</span>
+        </div>
+        <div class="project-right">
+          <h3>Writing & Documentation</h3>
+          <p class="project-location">Project Structuring, Educational Design & Strategic Reporting</p>
+          <p class="project-summary">Using writing as a strategic tool to structure projects, define measurable objectives, and document impact — from public grant applications and KPI frameworks to educational documentation and course design.</p>
+          <button class="expand-btn" onclick="event.stopPropagation(); toggleProject(this.closest('.project-item'))">
+            <span class="expand-icon">+</span> Read more
+          </button>
+          <div class="project-detail">
+            <div class="project-detail-inner">
+              <p class="detail-section-title">The practice</p>
+              <p class="detail-text">I specialize in transforming complex processes into clear, measurable, and well-documented frameworks. My experience spans public grant applications, program documentation, and the development of structured learning materials.</p>
+              <p class="detail-section-title">What I develop</p>
+              <ul class="detail-list">
+                <li>Activity reports for short- and long-term initiatives</li>
+                <li>Student progress tracking frameworks</li>
+                <li>Project objectives and structured action plans</li>
+                <li>KPI definition and monitoring systems</li>
+                <li>Evaluation instruments and assessment tools</li>
+                <li>Complete course curricula, learning objectives, and lesson plans</li>
+              </ul>
+              <p class="detail-text" style="margin-top:0.75rem;">I also support mentees in structuring their projects — helping them define measurable goals, establish indicators, and monitor progress effectively.</p>
+              <p class="detail-section-title">Tools & methods</p>
+              <div class="tools-wrap">
+                <span class="tool-pill">Grant Writing</span>
+                <span class="tool-pill">Strategic Project Design</span>
+                <span class="tool-pill">KPI Definition</span>
+                <span class="tool-pill">Impact Reporting</span>
+                <span class="tool-pill">Educational Documentation</span>
+                <span class="tool-pill">Curriculum Development</span>
+                <span class="tool-pill">Assessment Design</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PLACEHOLDER — replace with your real projects -->
+      <div class="project-item" onclick="toggleProject(this)">
+        <div class="project-left">
+          <div class="project-year">—</div>
+          <span class="project-tag">Maker</span>
+        </div>
+        <div class="project-right">
+          <h3>Maratonas Maker & Prototyping Sprints</h3>
+          <p class="project-location">Brazil</p>
+          <p class="project-summary">Add your description here — context, your role, and the impact of these initiatives.</p>
+          <button class="expand-btn" onclick="event.stopPropagation(); toggleProject(this.closest('.project-item'))">
+            <span class="expand-icon">+</span> Read more
+          </button>
+          <div class="project-detail">
+            <div class="project-detail-inner">
+              <p class="detail-section-title">Coming soon</p>
+              <p class="detail-text">Replace this placeholder with your real project details — including Mulheres Makers and other initiatives.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="methodology" id="methodology">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">How I work</p>
+      <h2 class="section-title">My <em>approach</em></h2>
+    </div>
+    <div class="method-steps reveal">
+      <div class="method-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Diagnosis</div>
+        <div class="step-desc">Deep understanding of the challenge, its context, stakeholders, and specific constraints before any structuring begins.</div>
+      </div>
+      <div class="method-step">
+        <div class="step-num">02</div>
+        <div class="step-title">Structuring</div>
+        <div class="step-desc">Co-designing frameworks, processes, and tools that translate complexity into clear, actionable steps aligned with the project's goals.</div>
+      </div>
+      <div class="method-step">
+        <div class="step-num">03</div>
+        <div class="step-title">Making</div>
+        <div class="step-desc">Developing deliverables — digital or physical — with precision and purpose: from facilitation materials to functional prototypes.</div>
+      </div>
+      <div class="method-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Iteration</div>
+        <div class="step-desc">Testing, refining, and documenting outcomes — ensuring the work generates measurable, lasting impact.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-eyebrow" style="color: var(--rose-deep);">Competencies</p>
+      <h2 class="section-title">Technical <em>skills</em></h2>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">Design & facilitation</div>
+        <div class="skill-list">
+          <div class="skill-item">Methodology design</div>
+          <div class="skill-item">Visual facilitation</div>
+          <div class="skill-item">Co-creation frameworks</div>
+          <div class="skill-item">Canvas & tool development</div>
+          <div class="skill-item">Innovation sprint facilitation</div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Digital fabrication</div>
+        <div class="skill-list">
+          <div class="skill-item">3D modeling & file preparation</div>
+          <div class="skill-item">3D printing (FDM)</div>
+          <div class="skill-item">Laser cutting</div>
+          <div class="skill-item">Machine operation & maintenance</div>
+          <div class="skill-item">Rapid prototyping</div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Writing & strategy</div>
+        <div class="skill-list">
+          <div class="skill-item">Grant & public call writing</div>
+          <div class="skill-item">KPI definition & monitoring</div>
+          <div class="skill-item">Impact reporting</div>
+          <div class="skill-item">Educational documentation</div>
+          <div class="skill-item">Strategic project design</div>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Education & mentorship</div>
+        <div class="skill-list">
+          <div class="skill-item">Curriculum development</div>
+          <div class="skill-item">Assessment instrument design</div>
+          <div class="skill-item">Workshop facilitation</div>
+          <div class="skill-item">Individual & group mentoring</div>
+          <div class="skill-item">Learning experience design</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">What people say</p>
+      <h2 class="section-title"><em>Testimonials</em></h2>
+    </div>
+    <div class="dep-grid reveal">
+      <div class="dep-card">
+        <span class="dep-quote-mark">"</span>
+        <p class="dep-text">Add a testimonial from someone who has worked with you. An authentic text that demonstrates the real impact of your work and approach.</p>
+        <div class="dep-author-name">Person's Name</div>
+        <div class="dep-author-role">Role · Organization</div>
+      </div>
+      <div class="dep-card">
+        <span class="dep-quote-mark">"</span>
+        <p class="dep-text">Add a testimonial from someone who has worked with you. An authentic text that demonstrates the real impact of your work and approach.</p>
+        <div class="dep-author-name">Person's Name</div>
+        <div class="dep-author-role">Role · Organization</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div>
+        <p class="section-label" style="color: var(--rose-mid);">Contact</p>
+        <h2 class="section-title">Let's <em>talk?</em></h2>
+        <p class="contact-intro">Open to projects, collaborations, and conversations about design, facilitation, digital fabrication, and educational strategy — in Brazil and internationally.</p>
+        <div class="contact-links">
+          <!-- Replace with your real email and links -->
+          <a href="mailto:your@email.com" class="contact-link">
+            <span class="contact-link-label">Email</span>
+            your@email.com
+          </a>
+          <a href="https://linkedin.com/in/yourprofile" class="contact-link" target="_blank">
+            <span class="contact-link-label">LinkedIn</span>
+            linkedin.com/in/yourprofile
+          </a>
+          <a href="#" class="contact-link">
+            <span class="contact-link-label">CV</span>
+            Download full resume
+          </a>
+        </div>
+      </div>
+      <div class="contact-form reveal">
+        <p class="form-label">Name</p>
+        <input type="text" class="form-input" placeholder="Your name">
+        <p class="form-label">Email</p>
+        <input type="email" class="form-input" placeholder="your@email.com">
+        <p class="form-label">Message</p>
+        <textarea class="form-input" placeholder="Tell me a bit about your project..."></textarea>
+        <!-- Note: to make the form functional, connect it to Formspree.io or Netlify Forms -->
+        <button class="btn-primary" style="width:100%;">Send message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">Mandy Souza</span>
+  <span class="footer-copy">© 2025 · Gothenburg, Sweden</span>
+</footer>
+
+<script>
+  function toggleProject(item) {
+    const detail = item.querySelector('.project-detail');
+    const icon = item.querySelector('.expand-icon');
+    const isOpen = detail.classList.contains('open');
+    detail.classList.toggle('open', !isOpen);
+    icon.classList.toggle('open', !isOpen);
+  }
+
+  function toggleMenu() {
+    document.getElementById('nav-links').classList.toggle('open');
+  }
+
+  function closeMenu() {
+    document.getElementById('nav-links').classList.remove('open');
+  }
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
